@@ -34,12 +34,51 @@ window.addEventListener("scroll", blurHeader);
 
 /*=============== SHOW SCROLL UP ===============*/
 const scrollUp = () => {
-  const scrollUp = document.getElementById('scroll-up');
-  this.scrollY >= 350 ? scrollUp.classList.add('show-scroll') : scrollUp.classList.remove('show-scroll');
-}
-window.addEventListener('scroll', scrollUp);
-
+  const scrollUp = document.getElementById("scroll-up");
+  this.scrollY >= 350
+    ? scrollUp.classList.add("show-scroll")
+    : scrollUp.classList.remove("show-scroll");
+};
+window.addEventListener("scroll", scrollUp);
 
 /*=============== SCROLL SECTIONS ACTIVE LINK ===============*/
+const sections = document.querySelectorAll("section[id]");
+
+const scrollActive = () => {
+  const scrollY = document.documentElement.scrollTop;
+  sections.forEach((current) => {
+    const sectionHeight = current.offsetHeight,
+      sectionTop = current.offsetTop - 58,
+      sectionId = current.getAttribute("id"),
+      sectionsClass = document.querySelector(
+        ".nav__menu a[href*='" + sectionId + "']"
+      );
+
+    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+      if (sectionsClass) {
+        sectionsClass.classList.add("active-link");
+      }
+    } else {
+      if (sectionsClass) {
+        sectionsClass.classList.remove("active-link");
+      }
+    }
+  });
+};
+
+window.addEventListener("scroll", scrollActive);
 
 /*=============== SCROLL REVEAL ANIMATION ===============*/
+
+const sr = ScrollReveal({
+  origin: "top",
+  distance: "60px",
+  duration: 2000,
+  delay: 300,
+});
+
+sr.reveal(`.home__data, .explore__data, .explore__user, .footer__container`);
+sr.reveal(`.home__card`, { delay: 600, distance: "100px", intervla: 100 });
+sr.reveal(`.about__data, .join__image`, { origin: "right" });
+sr.reveal(`.about__image, .join__data`, { origin: "left" });
+sr.reveal(`.popular__card`, { interval: 200 });
